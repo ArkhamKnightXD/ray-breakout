@@ -3,7 +3,7 @@
 
 Brick::Brick(float positionX, float positionY, int score)
 {
-    bounds = Rectangle{positionX, positionY, 64, 16};
+    bounds = Rectangle{positionX, positionY, 64, 20};
     this->score = score;
 }
 
@@ -14,5 +14,5 @@ void Brick::Update()
 
 void Brick::Draw()
 {
-    DrawRectangleRounded(bounds, 0.8, 0, WHITE);
+    DrawRectangleRounded(bounds, 0.8, 0,  Color{129, 204, 184, 255});
 }

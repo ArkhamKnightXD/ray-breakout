@@ -31,7 +31,7 @@ void Ball::Update()
 
 void Ball::Draw()
 {
-    DrawCircle(position.x, position.y, radius, YELLOW);
+    DrawCircle(position.x, position.y, radius, WHITE);
 }
 
 bool Ball::HasCollideWithPlayer(Rectangle playerBounds)

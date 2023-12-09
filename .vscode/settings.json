@@ -7,5 +7,20 @@
 		"**/.DS_Store": true,
 		"**/*.o": true,
 		"**/*.exe": true,
+	},
+	"files.associations": {
+		"*.tcc": "cpp",
+		"array": "cpp",
+		"atomic": "cpp",
+		"deque": "cpp",
+		"string": "cpp",
+		"unordered_map": "cpp",
+		"vector": "cpp",
+		"iterator": "cpp",
+		"memory_resource": "cpp",
+		"optional": "cpp",
+		"string_view": "cpp",
+		"initializer_list": "cpp",
+		"type_traits": "cpp"
 	}
 }

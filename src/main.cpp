@@ -1,13 +1,11 @@
 #include <raylib.h>
 #include "ball.h"
 #include "player.h"
+#include "brick.h"
+#include <vector>
 
 int main()
 {
-    Color darkGreen = Color{20, 160, 133, 255};
-    Color green = Color{38, 185, 154, 255};
-    Color lightGreen = Color{129, 204, 184, 255};
-
     const int screenWidth = 960;
     const int screenHeight = 640;
 
@@ -18,7 +16,27 @@ int main()
 
     Ball ball = Ball(screenWidth / 2, screenHeight / 2);
 
-    // InitAudioDevice();   
+    std::vector<Brick> bricks;
+
+    int positionX;
+    int positionY = 0;
+    int brickPoints = 8;
+
+    for (int i = 0; i < 8; i++)
+    {
+        positionX = 0;
+
+        for (int j = 0; j < 15; j++)
+        {
+            bricks.push_back(Brick(positionX, positionY, brickPoints));
+            positionX += 64;
+        }
+
+        brickPoints--;
+        positionY += 20;
+    }
+
+    // InitAudioDevice();
 
     Sound hitSound = LoadSound("assets/sounds/okay.wav");
     // Music music = LoadMusicStream("assets/music/pixel3.mp3");
@@ -34,8 +52,8 @@ int main()
         player.Update();
         ball.Update();
 
-        //Check collision between a circle and a rectangle
-        if (ball.HasCollideWithPlayer(player.bounds)) 
+        // Check collision between a circle and a rectangle
+        if (ball.HasCollideWithPlayer(player.bounds))
         {
             ball.velocity.y *= -1;
             PlaySound(hitSound);
@@ -46,32 +64,29 @@ int main()
             player.score++;
             ball.ResetPosition();
         }
-        
+
         BeginDrawing();
 
-            ClearBackground(darkGreen);
+        ClearBackground(Color{0,0,0,0});
 
-            //Right side color
-            DrawRectangle(screenWidth/2, 0, screenWidth/2, screenHeight, green);
+        // DrawText(TextFormat("%i", player.score), 230, 20, 80, WHITE);
 
-            // circle for the half of the court.
-            DrawCircle(screenWidth/2, screenHeight/2, 150, lightGreen);
+        for (Brick brick : bricks)
+        {
+            brick.Draw();
+        }
 
-            DrawLine(screenWidth /2, screenHeight, screenWidth / 2, 0, WHITE);
+        player.Draw();
 
-            DrawText(TextFormat("%i", player.score), 230, 20, 80, WHITE);
-        
-            player.Draw();
-    
-            ball.Draw();
+        ball.Draw();
 
         EndDrawing();
     }
 
-    UnloadSound(hitSound);     
+    UnloadSound(hitSound);
     // UnloadMusicStream(music);
 
-    CloseAudioDevice();     
+    CloseAudioDevice();
 
     CloseWindow();
     return 0;
