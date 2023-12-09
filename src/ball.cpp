@@ -14,7 +14,7 @@ void Ball::ResetPosition()
     position.y = GetScreenHeight() / 2;
 
     velocity.x *= -1;
-    velocity.y *= -1;
+    velocity.y *= 1;
 }
 
 void Ball::Update()
@@ -22,7 +22,10 @@ void Ball::Update()
     position.x += velocity.x;
     position.y += velocity.y;
 
-    if (position.y + radius >= GetScreenHeight() || position.y - radius <= 0)
+    if (position.x + radius >= GetScreenWidth() || position.x - radius <= 0)
+        velocity.x *= -1;
+
+    if (position.y + radius <= 20)
         velocity.y *= -1;
 }
 

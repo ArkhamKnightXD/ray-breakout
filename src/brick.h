@@ -2,15 +2,14 @@
 
 #include <raylib.h>
 
-class Player
+class Brick
 {
 public:
-    Player(float positionX, float positionY);
+    Brick(float positionX, float positionY, int score);
     void Update();
     void Draw();
 
 public:
     Rectangle bounds;
-    int speed;
     int score;
 };
