@@ -58,8 +58,8 @@ int main()
             if (!brick.isDestroyed && ball.HasCollide(brick.bounds))
             {
                 ball.velocity.y *= -1;
-                // the brick doesn't destroy, the variable set to true, but nothing happens. 
 
+                // the brick doesn't destroy, the variable set to true, but later it set to false again. 
                 printf("before collision: %d\n", brick.isDestroyed);
 
                 brick.HasBeenHitByTheBall();
