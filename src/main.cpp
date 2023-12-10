@@ -3,6 +3,7 @@
 #include "player.h"
 #include "brick.h"
 #include <vector>
+#include <stdio.h>
 
 int main()
 {
@@ -38,7 +39,7 @@ int main()
 
     // InitAudioDevice();
 
-    Sound hitSound = LoadSound("assets/sounds/okay.wav");
+    // Sound hitSound = LoadSound("assets/sounds/okay.wav");
     // Music music = LoadMusicStream("assets/music/pixel3.mp3");
 
     // music.looping = true;
@@ -54,15 +55,26 @@ int main()
 
         for (Brick brick : bricks)
         {
-            brick.HasBeenHitByTheBall(ball);
-            brick.Update();
+            if (!brick.isDestroyed && ball.HasCollide(brick.bounds))
+            {
+                ball.velocity.y *= -1;
+                // the brick doesn't destroy, the variable set to true, but nothing happens. 
+
+                printf("before collision: %d\n", brick.isDestroyed);
+
+                brick.HasBeenHitByTheBall();
+
+                brick.bounds.y = 50;
+
+                printf("after collision: %d\n", brick.isDestroyed);
+            }
         }
 
         // Check collision between a circle and a rectangle
         if (ball.HasCollide(player.bounds))
         {
             ball.velocity.y *= -1;
-            PlaySound(hitSound);
+            // PlaySound(hitSound);
         }
 
         if (ball.position.y > screenHeight)
@@ -89,7 +101,7 @@ int main()
         EndDrawing();
     }
 
-    UnloadSound(hitSound);
+    // UnloadSound(hitSound);
     // UnloadMusicStream(music);
 
     CloseAudioDevice();

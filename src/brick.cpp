@@ -6,14 +6,7 @@ Brick::Brick(float positionX, float positionY, int score)
 {
     bounds = Rectangle{positionX, positionY, 64, 20};
     this->score = score;
-    setToDestroy = false;
     isDestroyed = false;
-}
-
-void Brick::Update()
-{
-    if (setToDestroy)
-        isDestroyed = true;
 }
 
 void Brick::Draw()
@@ -23,13 +16,7 @@ void Brick::Draw()
 }
 
 //Todo The collision detection fails
-void Brick::HasBeenHitByTheBall(Ball ball)
+void Brick::HasBeenHitByTheBall()
 {
-    bool hasCollide = ball.HasCollide(bounds);
-
-    if (!isDestroyed && hasCollide)
-    {
-        ball.velocity.y *= -1;
-        setToDestroy = true;
-    }
+    isDestroyed = true;
 }
