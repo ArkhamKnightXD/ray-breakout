@@ -9,7 +9,7 @@ public:
     void ResetPosition();
     void Update();
     void Draw();
-    bool HasCollideWithPlayer(Rectangle playerBounds);
+    bool HasCollide(Rectangle playerBounds);
 
 public:
     Vector2 position;

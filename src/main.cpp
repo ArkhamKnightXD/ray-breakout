@@ -52,8 +52,14 @@ int main()
         player.Update();
         ball.Update();
 
+        for (Brick brick : bricks)
+        {
+            brick.HasBeenHitByTheBall(ball);
+            brick.Update();
+        }
+
         // Check collision between a circle and a rectangle
-        if (ball.HasCollideWithPlayer(player.bounds))
+        if (ball.HasCollide(player.bounds))
         {
             ball.velocity.y *= -1;
             PlaySound(hitSound);
