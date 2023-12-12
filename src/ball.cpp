@@ -1,11 +1,12 @@
 #include "ball.h"
 #include <raylib.h>
 
-Ball::Ball(float positionX, float positionY)
+Ball::Ball(float positionX, float positionY, Sound sound)
 {
     position = Vector2{positionX, positionY};
     velocity = Vector2{5, 5};
-    radius = 15;
+    radius = 10;
+    hitWallSound = sound;
 }
 
 void Ball::ResetPosition()
@@ -22,11 +23,17 @@ void Ball::Update()
     position.x += velocity.x;
     position.y += velocity.y;
 
-    if (position.x + radius >= GetScreenWidth() || position.x - radius <= 0)
-        velocity.x *= -1;
+    if (position.x + radius >= GetScreenWidth() || position.x - radius <= 0) {
 
-    if (position.y + radius <= 20)
+        velocity.x *= -1;
+        PlaySound(hitWallSound);
+    }
+
+    if (position.y + radius <= 20) {
+        
         velocity.y *= -1;
+        PlaySound(hitWallSound);
+    }
 }
 
 void Ball::Draw()

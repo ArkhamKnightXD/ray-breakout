@@ -6,12 +6,11 @@
 class Brick
 {
 public:
-    Brick(float positionX, float positionY, int score);
+    Brick(float positionX, float positionY, int brickPoints);
     void Draw();
-    void HasBeenHitByTheBall();
 
 public:
     Rectangle bounds;
-    int score;
+    int brickPoints;
     bool isDestroyed;
 };

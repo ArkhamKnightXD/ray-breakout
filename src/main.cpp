@@ -5,22 +5,12 @@
 #include <vector>
 #include <stdio.h>
 
-int main()
-{
-    const int screenWidth = 960;
-    const int screenHeight = 640;
-
-    InitWindow(screenWidth, screenHeight, "Breakout!");
-    SetTargetFPS(60);
-
-    Player player = Player(screenWidth / 2, screenHeight - 40);
-
-    Ball ball = Ball(screenWidth / 2, screenHeight / 2);
+std::vector<Brick> createBricks() {
 
     std::vector<Brick> bricks;
 
     int positionX;
-    int positionY = 0;
+    int positionY = 40;
     int brickPoints = 8;
 
     for (int i = 0; i < 8; i++)
@@ -34,76 +24,92 @@ int main()
         }
 
         brickPoints--;
-        positionY += 20;
+        positionY += 22;
     }
 
-    // InitAudioDevice();
+    return bricks;
+}
 
-    // Sound hitSound = LoadSound("assets/sounds/okay.wav");
-    // Music music = LoadMusicStream("assets/music/pixel3.mp3");
 
-    // music.looping = true;
+int main()
+{
+    const int screenWidth = 960;
+    const int screenHeight = 640;
 
-    // PlayMusicStream(music);
+    InitWindow(screenWidth, screenHeight, "Breakout!");
+    SetTargetFPS(60);
+
+    Player player = Player(screenWidth / 2, screenHeight - 40);
+
+    std::vector<Brick> bricks = createBricks();
+
+    InitAudioDevice();
+
+    Sound playerHitSound = LoadSound("assets/sounds/drop.wav");
+    Sound brickHitSound = LoadSound("assets/sounds/okay.wav");
+    Sound hitWallSound = LoadSound("assets/sounds/magic.wav");
+
+    Ball ball = Ball(screenWidth / 2, screenHeight / 2, hitWallSound);
 
     while (!WindowShouldClose())
     {
-        // UpdateMusicStream(music);
-
         player.Update();
         ball.Update();
 
-        for (Brick brick : bricks)
+        // I need to use normal for loop, because the collision logic doesn't work with foreach
+        // This is because everytime I have a completed loop in a foreach, it creates a new object
+        //and for that same reason it resets the object isDestroyed state.
+        for (int i = 0; i < bricks.size(); i++)
         {
-            if (!brick.isDestroyed && ball.HasCollide(brick.bounds))
+            if (!bricks[i].isDestroyed && ball.HasCollide(bricks[i].bounds))
             {
                 ball.velocity.y *= -1;
 
-                // the brick doesn't destroy, the variable set to true, but later it set to false again. 
-                printf("before collision: %d\n", brick.isDestroyed);
+                bricks[i].isDestroyed = true;
 
-                brick.HasBeenHitByTheBall();
+                player.score += bricks[i].brickPoints; 
 
-                brick.bounds.y = 50;
-
-                printf("after collision: %d\n", brick.isDestroyed);
+                PlaySound(brickHitSound);
             }
         }
 
-        // Check collision between a circle and a rectangle
         if (ball.HasCollide(player.bounds))
         {
             ball.velocity.y *= -1;
-            // PlaySound(hitSound);
+            PlaySound(playerHitSound);
         }
 
         if (ball.position.y > screenHeight)
         {
-            player.score++;
-            ball.ResetPosition();
+            if (player.lives > 0)
+            {
+                player.lives--;
+
+                ball.ResetPosition();
+            }
         }
 
         BeginDrawing();
 
-        ClearBackground(Color{0,0,0,0});
+            ClearBackground(Color{0,0,0,0});
 
-        // DrawText(TextFormat("%i", player.score), 230, 20, 80, WHITE);
+            DrawText(TextFormat("Score: %i", player.score), 150, 10, 20, WHITE);
+            DrawText(TextFormat("Lives %i", player.lives), screenWidth - 250, 10, 20, WHITE);
 
-        for (Brick brick : bricks)
-        {
-            brick.Draw();
-        }
+            for (Brick brick : bricks)
+            {
+                brick.Draw();
+            }
 
-        player.Draw();
+            ball.Draw();
 
-        ball.Draw();
+            player.Draw();
 
         EndDrawing();
     }
 
-    // UnloadSound(hitSound);
-    // UnloadMusicStream(music);
-
+    UnloadSound(playerHitSound);
+    UnloadSound(brickHitSound);
     CloseAudioDevice();
 
     CloseWindow();

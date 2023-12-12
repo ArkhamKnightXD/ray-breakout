@@ -13,4 +13,5 @@ public:
     Rectangle bounds;
     int speed;
     int score;
+    int lives;
 };

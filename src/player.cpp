@@ -6,6 +6,7 @@ Player::Player(float positionX, float positionY)
     bounds = Rectangle{positionX, positionY, 64, 16};
     speed = 8;
     score = 0;
+    lives = 2;
 }
 
 void Player::Update()
