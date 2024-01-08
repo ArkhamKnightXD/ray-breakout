@@ -59,7 +59,7 @@ int main()
         // I need to use normal for loop, because the collision logic doesn't work with foreach
         // This is because everytime I have a completed loop in a foreach, it creates a new object
         //and for that same reason it resets the object isDestroyed state.
-        for (int i = 0; i < bricks.size(); i++)
+        for (unsigned int i = 0; i < bricks.size(); i++)
         {
             if (!bricks[i].isDestroyed && ball.HasCollide(bricks[i].bounds))
             {
