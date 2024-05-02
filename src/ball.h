@@ -7,7 +7,7 @@ class Ball
 public:
     Ball(float positionX, float positionY, Sound sound);
     void ResetPosition();
-    void Update();
+    void Update(float deltaTime);
     void Draw();
     bool HasCollide(Rectangle playerBounds);
 

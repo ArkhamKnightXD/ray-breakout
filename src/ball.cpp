@@ -4,7 +4,7 @@
 Ball::Ball(float positionX, float positionY, Sound sound)
 {
     position = Vector2{positionX, positionY};
-    velocity = Vector2{5, 5};
+    velocity = Vector2{350, 350};
     radius = 10;
     hitWallSound = sound;
 }
@@ -18,10 +18,10 @@ void Ball::ResetPosition()
     velocity.y *= 1;
 }
 
-void Ball::Update()
+void Ball::Update(float deltaTime)
 {
-    position.x += velocity.x;
-    position.y += velocity.y;
+    position.x += velocity.x * deltaTime;
+    position.y += velocity.y * deltaTime;
 
     if (position.x + radius >= GetScreenWidth() || position.x - radius <= 0) {
 

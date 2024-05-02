@@ -4,18 +4,18 @@
 Player::Player(float positionX, float positionY)
 {
     bounds = Rectangle{positionX, positionY, 64, 16};
-    speed = 8;
+    speed = 600;
     score = 0;
     lives = 2;
 }
 
-void Player::Update()
+void Player::Update(float deltaTime)
 {
     if (IsKeyDown(KEY_A) && bounds.x >= 0)
-        bounds.x -= speed;
+        bounds.x -= speed * deltaTime;
 
     if (IsKeyDown(KEY_D) && bounds.x <= GetScreenWidth() - bounds.width)
-        bounds.x += speed;
+        bounds.x += speed * deltaTime;
 }
 
 void Player::Draw()

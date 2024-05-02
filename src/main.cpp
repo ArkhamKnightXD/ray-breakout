@@ -37,7 +37,7 @@ int main()
     const int screenHeight = 640;
 
     InitWindow(screenWidth, screenHeight, "Breakout!");
-    SetTargetFPS(60);
+    SetTargetFPS(144);
 
     Player player = Player(screenWidth / 2, screenHeight - 40);
 
@@ -49,12 +49,15 @@ int main()
     Sound brickHitSound = LoadSound("assets/sounds/okay.wav");
     Sound hitWallSound = LoadSound("assets/sounds/magic.wav");
 
-    Ball ball = Ball(screenWidth / 2, screenHeight / 2, hitWallSound);
+    Ball ball = Ball(screenWidth / 2, screenHeight / 2 -80, hitWallSound);
 
     while (!WindowShouldClose())
     {
-        player.Update();
-        ball.Update();
+
+        float deltaTime = GetFrameTime();
+
+        player.Update(deltaTime);
+        ball.Update(deltaTime);
 
         // I need to use normal for loop, because the collision logic doesn't work with foreach
         // This is because everytime I have a completed loop in a foreach, it creates a new object
