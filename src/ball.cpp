@@ -1,5 +1,4 @@
 #include "ball.h"
-#include <raylib.h>
 
 Ball::Ball(float positionX, float positionY, Sound sound)
 {

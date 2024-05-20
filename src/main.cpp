@@ -3,7 +3,6 @@
 #include "player.h"
 #include "brick.h"
 #include <vector>
-#include <stdio.h>
 
 std::vector<Brick> createBricks() {
 

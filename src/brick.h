@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ball.h"
 #include <raylib.h>
 
 class Brick

@@ -1,6 +1,4 @@
 #include "brick.h"
-#include "ball.h"
-#include <raylib.h>
 
 Brick::Brick(float positionX, float positionY, int brickPoints)
 {
