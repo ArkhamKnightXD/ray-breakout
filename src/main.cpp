@@ -52,7 +52,6 @@ int main()
 
     while (!WindowShouldClose())
     {
-
         float deltaTime = GetFrameTime();
 
         player.Update(deltaTime);
