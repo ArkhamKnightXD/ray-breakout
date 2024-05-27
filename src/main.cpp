@@ -38,9 +38,9 @@ int main()
     InitWindow(screenWidth, screenHeight, "Breakout!");
     SetTargetFPS(144);
 
-    Player player = Player(screenWidth / 2, screenHeight - 40);
-
     std::vector<Brick> bricks = createBricks();
+
+    Player player = Player(screenWidth / 2, screenHeight - 40);
 
     InitAudioDevice();
 
