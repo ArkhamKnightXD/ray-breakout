@@ -57,18 +57,19 @@ int main()
         player.Update(deltaTime);
         ball.Update(deltaTime);
 
-        // I need to use normal for loop, because the collision logic doesn't work with foreach
-        // This is because everytime I have a completed loop in a foreach, it creates a new object
-        //and for that same reason it resets the object isDestroyed state.
-        for (unsigned int i = 0; i < bricks.size(); i++)
+        // when I use &brick this is a reference to the original Brick object in the bricks vector.
+        // Changes to brick (like setting brick.isDestroyed to true) directly modify the original Brick in the vector.
+        // When I don't use & brick is a copy of each Brick object in the bricks vector.
+        // Changes to brick do not affect the original Brick objects in the vector.
+        for (Brick &brick : bricks)
         {
-            if (!bricks[i].isDestroyed && ball.HasCollide(bricks[i].bounds))
+            if (!brick.isDestroyed && ball.HasCollide(brick.bounds))
             {
                 ball.velocity.y *= -1;
 
-                bricks[i].isDestroyed = true;
+                brick.isDestroyed = true;
 
-                player.score += bricks[i].brickPoints; 
+                player.score += brick.brickPoints; 
 
                 PlaySound(brickHitSound);
             }
